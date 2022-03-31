@@ -1,0 +1,22 @@
+.orders-container {
+    width: 80%;
+    margin: auto;
+    margin-top: 1%;
+}
+
+.orders-heading {
+    color: white;
+    margin-bottom: 2%;
+}
+
+.orders-table {
+    /* background-color: rgba(106, 108, 89, 0.3); */
+    background-color: white;
+    /* color: bacl; */
+    /* border-style: none;
+    border-radius: 0%; */
+}
+
+.update-button {
+    color: black
+}

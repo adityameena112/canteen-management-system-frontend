@@ -1,0 +1,25 @@
+.my-order {
+    /* width: 90%; */
+    /* background-color: antiquewhite; */
+    height: 100%;
+    /* margin: auto; */
+    /* margin: auto; */
+    margin: auto;
+}
+
+.my-order-heading {
+    width: 100%;
+}
+
+.my-orders-table {
+    width: 90%;
+    margin: auto;
+    margin-top: 0.05%;
+    background-color: aliceblue;
+}
+
+.order-table-heading {
+    text-transform: uppercase;
+    font-weight: bold;
+    text-decoration: underline;
+}

@@ -1,0 +1,8 @@
+.form-layout {
+    width: 50%;
+    margin: auto;
+    margin-top: 10%;
+    padding: 2%;
+    background-color: grey;
+    border-radius: 1em;
+}
