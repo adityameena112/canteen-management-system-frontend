@@ -76,6 +76,15 @@ class Orders extends Component {
         this.setState({ showStatusModal: false })
         this.fetchOrders()
     }
+
+    getOrderName = (order) => {
+        const orderName = order.products.length != 0 ? order.products.map(x=>x.product.productName).reduce((previousValue, currentValue) => {
+            if (previousValue == '')
+                return currentValue
+            return previousValue + "," + currentValue
+        }, '') : 'No Products'
+        return orderName
+    }
     
     render() {
         return (
@@ -101,7 +110,7 @@ class Orders extends Component {
                             return (
                                 <tr key={order.id.toString()}>
                                     <td>{index + 1}</td>
-                                    <td>Mark</td>
+                                    <td>{ this.getOrderName(order) }</td>
                                     <td>{order.orderDate}</td>
                                     <td>{order.orderStatus}</td>
                                     <td>{order.orderBy.firstName + " " + order.orderBy.lastName}</td>

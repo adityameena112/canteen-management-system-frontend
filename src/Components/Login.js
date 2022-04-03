@@ -73,7 +73,7 @@ class Login extends Component {
           localStorage.setItem("login", login)
           localStorage.setItem("firstName", firstName)
           localStorage.setItem("lastName", lastName)
-          const role = res.data.authorities.includes('ROLE_ADMIN') ? "STAFF" : "USER"
+          const role = res.data.authorities.includes('ROLE_ADMIN') ? "ADMIN" : res.data.authorities.includes('ROLE_STAFF') ? "STAFF" : "USER"
           localStorage.setItem("role", role)
           // this.setState({ loader: false })
       }).catch( (error) => {

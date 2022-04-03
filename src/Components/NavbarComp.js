@@ -22,6 +22,7 @@ import MenuButtonComponent from './MenuButtonComponent';
 import Orders from './Orders';
 import Profile from './Profile'
 import AdminHome from './AdminHome'
+import StaffRegistration from './StaffRegistration'
 
 export default class NavbarComp extends Component {
 
@@ -33,6 +34,7 @@ export default class NavbarComp extends Component {
         authenticated: false,
         isStaff: false,
         anchorEl: null,
+        isAdmin: false
         
     }
 
@@ -44,7 +46,7 @@ export default class NavbarComp extends Component {
 
     checkAuthenticatedUser = () => {
         const token = localStorage.getItem('token');
-        if (token != null) this.setState({ authenticated: true, isStaff: localStorage.getItem('role') == 'STAFF' })
+        if (token != null) this.setState({ authenticated: true, isStaff: localStorage.getItem('role') == 'STAFF', isAdmin: localStorage.getItem('role') == 'ADMIN' })
     }
 
     isAuthenticated = () => {
@@ -92,9 +94,10 @@ export default class NavbarComp extends Component {
                                 <Nav.Link as={Link} to="/home">Home</Nav.Link>
                                 { !this.state.authenticated && <Nav.Link as={Link} to="/login">Login</Nav.Link> }
                                 { !this.state.authenticated && <Nav.Link as={Link} to="/register">Register</Nav.Link> }
+                                { (this.state.authenticated && this.state.isAdmin ) && <Nav.Link as={Link} to="/staff-registration">Staff Register</Nav.Link> }
                                 { this.state.authenticated && <Nav.Link as={Link} to="/products">Products</Nav.Link> }
-                                { (this.state.authenticated && this.state.isStaff ) && <Nav.Link as={Link} to="/orders">Orders</Nav.Link> }
-                                { (this.state.authenticated && !this.state.isStaff ) && <Nav.Link as={Link} to="/myorders">My Orders</Nav.Link> }
+                                { (this.state.authenticated && (this.state.isStaff || this.state.isAdmin) ) && <Nav.Link as={Link} to="/orders">Orders</Nav.Link> }
+                                { (this.state.authenticated && (!this.state.isStaff && !this.state.isAdmin) ) && <Nav.Link as={Link} to="/myorders">My Orders</Nav.Link> }
                                 <Nav.Link as={Link} to="/about">About</Nav.Link>
                                 <Nav.Link as={Link} to="/contact">Contact</Nav.Link>
                                 {/* { this.state.authenticated && <button className="btn btn-dark" onClick={this.handleLogout}>Logout</button> } */}
@@ -124,7 +127,7 @@ export default class NavbarComp extends Component {
                             render={(props) => <Login checkAuthenticatedUser={this.checkAuthenticatedUser} {...props} />}
                         />
                         <Route path="/products"
-                            render={(props) => <Product isStaff={this.state.isStaff} {...props} />}
+                            render={(props) => <Product isStaff={( this.state.isStaff || this.state.isAdmin )} {...props} />}
                         />
                         <Route path="/myorders">
                             <MyOrders />
@@ -137,6 +140,9 @@ export default class NavbarComp extends Component {
                         </Route>
                         <Route path="/admin">
                             <AdminHome />
+                        </Route>
+                        <Route path="/staff-registration">
+                            <StaffRegistration />
                         </Route>
                         <Route path="/">
                             <Home />
