@@ -205,7 +205,7 @@ class Product extends Component {
           
           { this.state.products.map(p => (
             <tr key={p.id} >
-                <td>{p.id}</td>
+                <td><img className="product-img" src={p.imageUrl} /></td>
                 <td>{p.productName}</td>
                 <td>{p.price} &#8377;</td>
                 <td>{p.description}</td>

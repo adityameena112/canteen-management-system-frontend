@@ -11,5 +11,6 @@ export default {
     MAKE_USER_ORDER: '/api/orders/make-order',
     GET_ALL_ORDERS: '/api/orders/get-all',
     UPDATE_ORDER_STATUS: '/api/orders/update-status',
-    GET_ORDER_STATUS: '/api/orders/get-order-status'
+    GET_ORDER_STATUS: '/api/orders/get-order-status',
+    GET_PRODUCT_IMAGE: '/product-image?id='
 }
