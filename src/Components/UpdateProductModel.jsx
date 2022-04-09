@@ -15,6 +15,14 @@ const UpdateProductModal = (props) => {
         props.onProductName(e)
     }
 
+    const handleSelectedImage = (e) => {
+        props.onSelectedImage(e)
+    }
+
+    const handleRemainingQuantity = (e) => {
+        props.onRemainingQuantity(e)
+    }
+
     return (<Modal
         {...props}
         size="lg"
@@ -44,6 +52,14 @@ const UpdateProductModal = (props) => {
             <div className="form-group">
                 <label for="productDescription">Description</label>
                 <input required type="text" className="form-control" id="productDescription" placeholder="Description" value={props.description} onChange={handleDescription}  />
+            </div>
+            <div className="form-group">
+                <label for="remainingQuantity">Remaining Stocks</label>
+                <input required type="number" className="form-control" id="remainingQuantity" placeholder="Remaining Stocks" value={props.remainingQuantity} onChange={handleRemainingQuantity}  />
+            </div>
+            <div className="form-group">
+                <label for="productImage">Image</label>
+                <input required type="file" className="form-control" id="productImage" onChange={handleSelectedImage}  />
             </div>
             </form>
         </Modal.Body>

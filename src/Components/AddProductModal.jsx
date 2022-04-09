@@ -15,6 +15,14 @@ const AddProductModal = (props) => {
         props.onProductName(e)
     }
 
+    const handleSelectedImage = (e) => {
+        props.onSelectedImage(e)
+    }
+
+    const handleRemainingQuantity = (e) => {
+        props.onRemainingQuantity(e)
+    }
+
     const onSave = () => {
         props.onSave()
     }
@@ -44,6 +52,14 @@ const AddProductModal = (props) => {
             <div className="form-group">
                 <label for="productDescription">Description</label>
                 <input required type="text" className="form-control" id="productDescription" placeholder="Description" onChange={handleDescription} />
+            </div>
+            <div className="form-group">
+                <label for="remainingQuantity">Remaining Stocks</label>
+                <input required type="number" className="form-control" id="remainingQuantity" placeholder="Remaining Stocks" onChange={handleRemainingQuantity} />
+            </div>
+            <div className="form-group">
+                <label for="productImage">Image</label>
+                <input required type="file" className="form-control" id="productImage" onChange={handleSelectedImage}  />
             </div>
             </form>
         </Modal.Body>

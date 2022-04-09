@@ -12,5 +12,7 @@ export default {
     GET_ALL_ORDERS: '/api/orders/get-all',
     UPDATE_ORDER_STATUS: '/api/orders/update-status',
     GET_ORDER_STATUS: '/api/orders/get-order-status',
-    GET_PRODUCT_IMAGE: '/product-image?id='
+    GET_PRODUCT_IMAGE: '/product-image?id=',
+    UPLOAD_PRODUCT_IMAGE: '/upload',
+    GET_PRODUCT_SALES: '/api/orders/get-product-sales'
 }

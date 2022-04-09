@@ -12,10 +12,13 @@
     "@testing-library/user-event": "^12.8.3",
     "axios": "^0.26.1",
     "bootstrap": "^5.0.2",
+    "chart.js": "^3.7.1",
     "react": "^17.0.2",
     "react-bootstrap": "^2.0.0-beta.4",
+    "react-chartjs-2": "^4.1.0",
     "react-dom": "^17.0.2",
     "react-notifications": "^1.7.3",
+    "react-pro-sidebar": "^0.7.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
     "web-vitals": "^1.1.2"

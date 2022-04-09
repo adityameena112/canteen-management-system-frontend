@@ -11,6 +11,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Constant from './Constant';
 import MakeOrderModal from './MakeOrderModal';
+import { Spinner } from 'react-bootstrap';
 
 const axios = require('axios');
 
@@ -32,10 +33,14 @@ class MyOrders extends Component {
 
     state = {
         orders: [],
-        showModal: false
+        showModal: false,
+        loader: false
     }
 
     fetchOrders = () => {
+
+        this.setState({ loader: true })
+
         axios.request({
             url: Constant.GET_USER_ORDERS,
             method: 'get',
@@ -60,10 +65,10 @@ class MyOrders extends Component {
             })
 
             this.setState({ orders: orders })
-            // this.setState({ loader: false })
+            this.setState({ loader: false })
         }).catch(function (error) {
             console.log(error);
-            // this.setState({ loader: false })
+            this.setState({ loader: false })
         })
     } 
 
@@ -77,6 +82,15 @@ class MyOrders extends Component {
     }
     
     render() {
+
+        if (this.state.loader) {
+            return (
+                <Spinner animation="border" role="status" style={{ margin: 'auto', marginTop: '19%', color: "white" }}>
+                    <span className="visually-hidden">Loading...</span>
+                </Spinner>)
+          }
+
+
         return (
             <div className="my-order align-items-center p-3 my-3 text-black bg-purple rounded shadow-sm" >
 

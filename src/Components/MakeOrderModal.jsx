@@ -35,7 +35,8 @@ class MakeOrderModal extends Component {
                 return {
                     quantity: 0,
                     totalPrice: 0,
-                    product: product
+                    product: product,
+                    remainingQuantity: product.remainingQuantity ? product.remainingQuantity : 0
                 }
             })
             this.setState({ products: products })
@@ -80,6 +81,7 @@ class MakeOrderModal extends Component {
             if (p.product.id == product.product.id) {
                 product.quantity = product.quantity + 1
                 product.totalPrice = product.quantity * product.product.price
+                product.remainingQuantity = product.remainingQuantity - 1
             }
             return product;
         })
@@ -94,6 +96,7 @@ class MakeOrderModal extends Component {
             if (p.product.id == product.product.id) {
                 product.quantity = product.quantity - 1
                 product.totalPrice = product.quantity * product.product.price
+                product.remainingQuantity = product.remainingQuantity + 1
             }
             return product;
         })
@@ -123,6 +126,7 @@ class MakeOrderModal extends Component {
                         <th>Quantity</th>
                         <th>Price</th>
                         <th>Total</th>
+                        <th>Remaining Quantity</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -133,8 +137,9 @@ class MakeOrderModal extends Component {
                             <td>{product.quantity}</td>
                             <td>{product.product.price}</td>
                             <td>{product.totalPrice}</td>
+                            <td>{product.remainingQuantity}</td>
                             <td>
-                                <button onClick={() => this.handleIncrement(product) } className="btn btn-primary">+</button>
+                                <button onClick={() => this.handleIncrement(product) } disabled={product.remainingQuantity === 0} className="btn btn-primary">+</button>
                             </td>
                             <td>
                                 <button className="btn btn-danger" onClick={() => this.handleDecrement(product)} disabled={product.quantity == 0} >-</button>

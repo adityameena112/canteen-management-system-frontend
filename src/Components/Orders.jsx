@@ -3,7 +3,7 @@ import { Table } from 'react-bootstrap';
 import './orders.css'
 import Constant from './Constant';
 import UpdateOrderStatusModel from './UpdateOrderStatusModel';
-
+import { Spinner } from 'react-bootstrap';
 
 const axios = require('axios');
 
@@ -15,11 +15,12 @@ class Orders extends Component {
         showStatusModal: false,
         products: [],
         orderStatus: [],
-        orderId: null
+        orderId: null,
+        loader: false
     }
     
     componentDidMount() {
-        this.setState({ loader: false })
+        this.setState({ loader: true })
         this.fetchOrders()
         this.fetchOrderStatus()
     }
@@ -37,10 +38,10 @@ class Orders extends Component {
             }
         }).then(res => {
             this.setState({ orders: res.data })
-            this.setState({ loader: false })
+            // this.setState({ loader: false })
         }).catch( (error) => {
             console.log(error);
-            this.setState({ loader: false })
+            // this.setState({ loader: false })
         })
     }
 
@@ -87,6 +88,14 @@ class Orders extends Component {
     }
     
     render() {
+
+        if (this.state.loader) {
+            return (
+                <Spinner animation="border" role="status" style={{ margin: 'auto', marginTop: '19%', color: "white" }}>
+                    <span className="visually-hidden">Loading...</span>
+                </Spinner>)
+          }
+
         return (
             <div className="orders-container">
                 <h2 className="orders-heading">Orders</h2>
@@ -116,7 +125,7 @@ class Orders extends Component {
                                     <td>{order.orderBy.firstName + " " + order.orderBy.lastName}</td>
                                     <td>{this.getTotalPrice(order.products)} &#8377;</td>
                                     <td>
-                                        <button className="btn btn-primary update-button" disabled={order.orderStatus == 'COMPLETED'} onClick={() => this.handleUpdateButton(order.products, order.id)}>Update Status</button>
+                                        <button className="btn btn-primary update-button" disabled={order.orderStatus == 'COMPLETED' || order.orderStatus == 'CANCELED'} onClick={() => this.handleUpdateButton(order.products, order.id)}>Update Status</button>
                                     </td>
                                 </tr>
                                 )

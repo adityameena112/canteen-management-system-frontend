@@ -3,3 +3,12 @@
     margin: auto;
     margin-top: 50px;
 }
+
+.admin-dashboard {
+    width: 60%;
+    margin: auto;
+    margin-top: 2%;
+    background-color: thistle;
+    border-radius: 2%;
+    padding-bottom: 2%;
+}

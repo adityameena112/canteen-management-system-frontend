@@ -26,7 +26,9 @@ class Product extends Component {
         showModel: false,
         loader: true,
         showUpdateProductModel: false,
-        product: {}
+        product: {},
+        file: null,
+        remainingQuantity: 0
     }
 
     componentDidMount() {
@@ -66,12 +68,16 @@ class Product extends Component {
             data: {
                 productName: this.state.productName,
                 price: this.state.price,
-                description: this.state.description
+                description: this.state.description,
+                remainingQuantity: this.state.remainingQuantity
             }
         }).then(res => {
             let p = this.state.products
             p.push(res.data)
             this.setState({ products: p })
+            if (this.state.file) {
+                this.uploadProductImage(res.data.id)
+            }
             this.setState({ loader: false })
             NotificationManager.success("Product added Successfully!");
         }).catch( (error) => {
@@ -99,6 +105,25 @@ class Product extends Component {
         })
     }
 
+    uploadProductImage = (id) => {
+        
+        const formData = new FormData();
+        formData.append('file', this.state.file)
+        
+        const config = {
+            headers: {
+                'content-type': 'multipart/form-data' ,
+                // 'authorization': localStorage.getItem('token')
+            },
+        }
+
+        const url = Constant.BASE_URL + Constant.UPLOAD_PRODUCT_IMAGE + "?id=" + id
+        
+        axios.post(url, formData, config)
+        
+        this.fetchProducts()
+    }
+
     updateProduct = () => {
         axios.request({
             url: Constant.UPDATE_PRODUCT,
@@ -112,7 +137,8 @@ class Product extends Component {
                 id: this.state.id,
                 productName: this.state.productName,
                 price: this.state.price,
-                description: this.state.description
+                description: this.state.description,
+                remainingQuantity: parseInt(this.state.remainingQuantity)
             }
         }).then(res => {
             let products = this.state.products
@@ -122,6 +148,9 @@ class Product extends Component {
                 }
                 return product
             })
+            if (this.state.file) {
+                this.uploadProductImage(res.data.id)
+            }
             this.setState({ products: products })
             this.setState({ loader: false })
             NotificationManager.success("Product updated Successfully!");
@@ -130,6 +159,10 @@ class Product extends Component {
             console.log(error);
             this.setState({ loader: false })
         })
+    }
+
+    onSelectedImage = (e) => {
+        this.setState({ file: e.target.files[0] })
     }
 
     handleProductName = (e) => {
@@ -142,6 +175,10 @@ class Product extends Component {
 
     handleDescription = (e) => {
         this.setState({ description: e.target.value })
+    }
+
+    handleRemainingQuantity = (e) => {
+        this.setState({ remainingQuantity: e.target.value })
     }
 
     onSave = () => {
@@ -167,7 +204,8 @@ class Product extends Component {
             productName: product.productName,
             price: product.price,
             description: product.description,
-            showUpdateProductModel: true
+            showUpdateProductModel: true,
+            remainingQuantity: product.remainingQuantity
         })
     }
 
@@ -175,10 +213,10 @@ class Product extends Component {
 
     if (this.state.loader) {
         return (
-            <Spinner animation="border" role="status" style={{ margin: 'auto', marginTop: '19%' }}>
+            <Spinner animation="border" role="status" style={{ margin: 'auto', marginTop: '19%', color: "white" }}>
                 <span className="visually-hidden">Loading...</span>
             </Spinner>)
-    }
+      }
 
     return (
         
@@ -198,6 +236,7 @@ class Product extends Component {
             <th>Product Name</th>
             <th>Price</th>
             <th>Description</th>
+            <th>Remaining Stocks</th>
             { this.props.isStaff && <th>#</th> }
           </tr>
         </thead>
@@ -209,6 +248,7 @@ class Product extends Component {
                 <td>{p.productName}</td>
                 <td>{p.price} &#8377;</td>
                 <td>{p.description}</td>
+                <td>{p.remainingQuantity ? p.remainingQuantity : 0}</td>
                 {/* <button className="btn">Delete</button> */}
                 { this.props.isStaff &&
                     <Button variant="contained" style={{ color: 'black' }} onClick={() => this.handleUpdateButton(p)} >Update</Button>
@@ -228,7 +268,10 @@ class Product extends Component {
             onPrice={(e) => this.handlePrice(e)} 
             onDescription={(e) => this.handleDescription(e)}
             onHide={() => this.setState({ showModel: false })} 
+            onSelectedImage={this.onSelectedImage}
+            remainingQuantity={this.state.remainingQuantity}
             onSave={this.onSave}
+            onRemainingQuantity={this.handleRemainingQuantity}
             />
 
         <UpdateProductModal 
@@ -237,11 +280,14 @@ class Product extends Component {
             price={this.state.price}
             productName={this.state.productName}
             description={this.state.description}
+            remainingQuantity={this.state.remainingQuantity}
             id={this.state.id}
             onProductName={(e) => this.handleProductName(e) } 
             onPrice={(e) => this.handlePrice(e)} 
             onDescription={(e) => this.handleDescription(e)}
             onUpdate={this.onUpdate}
+            onSelectedImage={this.onSelectedImage}
+            onRemainingQuantity={this.handleRemainingQuantity}
         />
         <NotificationContainer/>
 
