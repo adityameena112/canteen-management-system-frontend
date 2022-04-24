@@ -98,8 +98,8 @@ export default class NavbarComp extends Component {
                                 { this.state.authenticated && <Nav.Link as={Link} to="/products">Products</Nav.Link> }
                                 { (this.state.authenticated && (this.state.isStaff || this.state.isAdmin) ) && <Nav.Link as={Link} to="/orders">Orders</Nav.Link> }
                                 { (this.state.authenticated && (!this.state.isStaff && !this.state.isAdmin) ) && <Nav.Link as={Link} to="/myorders">My Orders</Nav.Link> }
-                                <Nav.Link as={Link} to="/about">About</Nav.Link>
-                                <Nav.Link as={Link} to="/contact">Contact</Nav.Link>
+                                {/* <Nav.Link as={Link} to="/about">About</Nav.Link> */}
+                                <Nav.Link as={Link} to="/contact">Contact Us</Nav.Link>
                                 {/* { this.state.authenticated && <button className="btn btn-dark" onClick={this.handleLogout}>Logout</button> } */}
                                 
                             </Nav>
