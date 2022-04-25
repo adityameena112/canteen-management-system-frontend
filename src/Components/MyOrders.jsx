@@ -12,6 +12,7 @@ import TableRow from '@mui/material/TableRow';
 import Constant from './Constant';
 import MakeOrderModal from './MakeOrderModal';
 import { Spinner } from 'react-bootstrap';
+import PaymentModal from './PaymentModal';
 
 const axios = require('axios');
 
@@ -34,7 +35,8 @@ class MyOrders extends Component {
     state = {
         orders: [],
         showModal: false,
-        loader: false
+        loader: false,
+        paymentModal: false
     }
 
     fetchOrders = () => {
@@ -78,6 +80,7 @@ class MyOrders extends Component {
 
 
     updateOrders = () => {
+        this.setState({ paymentModal: true })
         this.fetchOrders()
     }
     
@@ -128,6 +131,12 @@ class MyOrders extends Component {
                     onHide={() => this.setState({ showModal: false })} 
                     updateOrders={this.updateOrders}
                     hideModal={this.hideModal}
+                />
+
+                <PaymentModal 
+                    show={this.state.paymentModal}
+                    onHide={() => this.setState({ paymentModal: false })} 
+                    onClose={() => this.setState({ paymentModal: false })}
                 />
                 
 

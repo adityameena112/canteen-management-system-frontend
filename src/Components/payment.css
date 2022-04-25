@@ -1,0 +1,14 @@
+.payment-container {
+    margin: auto;
+}
+
+.payment-img {
+    width: 200px;
+    height: 200px;
+    margin: auto;
+}
+
+h4 {
+    margin-top: 1%;
+    color: black;
+}
