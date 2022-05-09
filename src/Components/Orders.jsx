@@ -106,6 +106,8 @@ class Orders extends Component {
                         <th>Order Name</th>
                         <th>Order Date</th>
                         <th>Order Status</th>
+                        <th>Payment Type</th>
+                        <th>Payment Status</th>
                         <th>Order By</th>
                         <th>Grand Total</th>
                         <th></th>
@@ -122,6 +124,8 @@ class Orders extends Component {
                                     <td>{ this.getOrderName(order) }</td>
                                     <td>{order.orderDate}</td>
                                     <td>{order.orderStatus}</td>
+                                    <td>{order.paymentType}</td>
+                                    <td>{order.paymentStatus}</td>
                                     <td>{order.orderBy.firstName + " " + order.orderBy.lastName}</td>
                                     <td>{this.getTotalPrice(order.products)} &#8377;</td>
                                     <td>

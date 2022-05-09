@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import { Modal }from 'react-bootstrap'
-import { Form } from 'react-bootstrap';
 import Constant from './Constant';
 import { Table, Badge } from 'react-bootstrap';
-import { Divider } from '@mui/material';
+import { Divider, FormControl, InputLabel, Select, MenuItem, Input, Box, TextField } from '@mui/material';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import './payment.css'
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 
 
 const axios = require('axios');
@@ -13,11 +16,19 @@ class MakeOrderModal extends Component {
     state = {
         selectedProduct: 'No Selected',
         products: [],
-        grandTotal: 0
+        grandTotal: 0,
+        isPaymentPage: false,
+        paymentType: '',
+        upi: '',
+        cardExpireDate: null
     }
 
     componentDidMount() {
         this.fetchProducts()
+    }
+
+    onCancel = () => {
+        this.setState({ isPaymentPage: false })
     }
 
     fetchProducts = () => {
@@ -61,7 +72,8 @@ class MakeOrderModal extends Component {
                 'authorization': localStorage.getItem('token')
             },
             data: {
-                products: products
+                products: products,
+                paymentType: this.state.paymentType
             }
         }).then(res => {
             this.props.updateOrders()
@@ -104,7 +116,23 @@ class MakeOrderModal extends Component {
         this.setState({ products, grandTotal });
     }
 
+    handlePaymentTypeChange = (e) => {
+        this.setState({ paymentType: e.target.value })
+    }
+
+    handleUpiPayment = (e) => {
+        this.setState({ upi: e.target.value })
+    }
+
+    handleCardExpireDate = (e) => {
+        this.setState({ cardExpireDate: e })
+    }
+
     render() {
+
+        if (this.state.isPaymentPage)
+            return this.paymentModal();
+
         return (<Modal
             {...this.props}
             size="lg"
@@ -167,10 +195,84 @@ class MakeOrderModal extends Component {
                 
             </Modal.Body>
             <Modal.Footer>
-                <button className="btn btn-primary" disabled={this.state.products.filter(product => product.quantity > 0).length == 0 } onClick={this.makeOrder} >Order</button>
+                <button className="btn btn-primary" disabled={this.state.products.filter(product => product.quantity > 0).length == 0 } onClick={() => this.setState({ isPaymentPage: true })} >Order</button>
             </Modal.Footer>
         </Modal>)
     }
-  }
+
+    paymentModal = () => {
+        return(
+            <Modal
+                {...this.props}
+                size="lg"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+                >
+                <Modal.Header closeButton> 
+                    <Modal.Title id="contained-modal-title-vcenter">
+                        Make Payment
+                    </Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <div className="payment-container">
+                        <div className="payment-details-container">
+                            <p>Grand Total: {this.state.grandTotal} </p>
+                            
+                        </div>
+                        <div className="order-details-container">
+                            <FormControl fullWidth>
+                                <InputLabel id="demo-simple-select-label">Payment Type</InputLabel>
+                                
+                                <Select
+                                    labelId="demo-simple-select-label"
+                                    id="demo-simple-select"
+                                    value={this.state.paymentType}
+                                    label="Payment Type"
+                                    onChange={this.handlePaymentTypeChange}
+                                >
+                                    <MenuItem value={'CASH'}>Cash</MenuItem>
+                                    <MenuItem value={'CREDIT_CARD'}>Credit Card</MenuItem>
+                                    <MenuItem value={'DEBIT_CARD'}>Debit Card</MenuItem>
+                                    <MenuItem value={'UPI'}>UPI</MenuItem>
+                                </Select>
+
+                            </FormControl>  
+                            { this.state.paymentType === 'UPI' && 
+                            <Box mt={2}>
+                                <Input placeholder='Enter UPI ID' onChange={this.handleUpiPayment} value={this.state.upi} />    
+                            </Box>  
+                            }
+                            { (this.state.paymentType === 'CREDIT_CARD' || this.state.paymentType === 'DEBIT_CARD') && 
+                            <Box mt={2} style={{
+                                display: 'flex',
+                                alignItems: 'center'
+                            }}>
+
+                                <Input style={{ width: '70%', marginRight: '5%' }} placeholder='Enter Card Number' onChange={this.handleUpiPayment} value={this.state.upi} /> 
+                                <LocalizationProvider dateAdapter={AdapterDateFns} style={{ width: '45%' }}>
+                                    <DatePicker
+                                        inputFormat="yyyy-MM"
+                                        label="Expire Date"
+                                        views={['year', 'month']}
+                                        minDate={new Date()}
+                                        value={this.state.cardExpireDate}
+                                        onChange={this.handleCardExpireDate}
+                                        renderInput={(params) => <TextField {...params} helperText={null} />}
+                                        />
+                                </LocalizationProvider>
+                            </Box>
+                            }
+                        </div>
+                    </div>
+                </Modal.Body>
+                <Modal.Footer>
+                    <button className="btn btn-primary" onClick={this.onCancel} >Cancel</button>
+                    <button className="btn btn-primary" onClick={this.makeOrder} >Make Payment</button>
+                </Modal.Footer>
+            </Modal>
+        );
+    }
+
+}
 
   export default MakeOrderModal

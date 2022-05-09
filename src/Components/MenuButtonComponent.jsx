@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-// import { IconButton } from '@mui/material/IconButton';
 import { Avatar } from '@mui/material';
 import { Tooltip } from '@mui/material';
 import { MenuItem } from '@mui/material';
@@ -12,7 +11,7 @@ import { Link } from 'react-router-dom';
 
 const MenuButtonComponent = (props) => {
 
-    const [anchorEl, setAnchorEl] = React.useState(null);
+    const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);

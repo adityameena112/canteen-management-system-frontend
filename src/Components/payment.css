@@ -1,0 +1,17 @@
+.payment-container {
+    align-content: center;
+    display: inline;
+}
+
+.payment-details-container {
+    width: 50%;
+    height: 50%;
+    float: left;
+    color: black;
+}
+
+.order-details-container {
+    width: 50%;
+    height: 50%;
+    float: right;
+}

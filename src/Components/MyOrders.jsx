@@ -109,6 +109,8 @@ class MyOrders extends Component {
                                 <TableCell className="order-table-heading" >Order Name</TableCell>
                                 <TableCell className="order-table-heading" align="right">Order Status</TableCell>
                                 <TableCell className="order-table-heading" align="right">Order Date</TableCell>
+                                <TableCell className="order-table-heading" align="right">Payment Type</TableCell>
+                                <TableCell className="order-table-heading" align="right">Payment Status</TableCell>
                                 <TableCell className="order-table-heading" align="right">Total</TableCell>
                             </TableRow>
                             </TableHead>

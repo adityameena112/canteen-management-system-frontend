@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Navbar, NavDropdown, Form, FormControl, Button, Nav } from 'react-bootstrap'
+import { Navbar, Nav } from 'react-bootstrap'
 import {
     BrowserRouter as Router,
     Switch,
@@ -14,10 +14,7 @@ import About from './About'
 import Login from './Login';
 import Register from './Register';
 import Product from './Product';
-import Avatar from '@mui/material/Avatar'
 import MyOrders from './MyOrders';
-import { Menu, MenuItem } from '@mui/material';
-import { IconButton } from '@mui/material';
 import MenuButtonComponent from './MenuButtonComponent';
 import Orders from './Orders';
 import Profile from './Profile'

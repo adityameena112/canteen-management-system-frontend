@@ -6,7 +6,7 @@ const axios = require('axios');
 
 const UpdateOrderStatusModel = (props) => {
 
-    const [status, setStatus] = useState('COMPLETED')
+    const [status, setStatus] = useState('')
 
     const handleChange = (e) => {
         setStatus(e.target.value)
@@ -84,7 +84,7 @@ const UpdateOrderStatusModel = (props) => {
             </form>
         </Modal.Body>
         <Modal.Footer>
-            <button className="btn btn-primary" onClick={handleUpdate}>Update</button>
+            <button className="btn btn-primary" disabled={status === ''} onClick={handleUpdate}>Update</button>
         </Modal.Footer>
     </Modal>)
   }

@@ -13,12 +13,12 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
 export default function Row(props) {
     const { row } = props;
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
   
     return (
       <React.Fragment>
         <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
-          <TableCell>
+          <TableCell> 
             <IconButton
               aria-label="expand row"
               size="small"
@@ -32,6 +32,8 @@ export default function Row(props) {
           </TableCell>
           <TableCell align="right">{row.orderStatus}</TableCell>
           <TableCell align="right">{row.orderDate}</TableCell>
+          <TableCell align="right">{row.paymentType}</TableCell>
+          <TableCell align="right">{row.paymentStatus}</TableCell>
           <TableCell align="right">{row.total}</TableCell>
         </TableRow>
         <TableRow>
